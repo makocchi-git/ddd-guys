@@ -1,0 +1,26 @@
+{
+  "name": "ddd-guys",
+  "version": "0.0.1",
+  "description": "ddd-guys study DDD",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo 'tentatively not implementation'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jupemara/ddd-guys.git"
+  },
+  "keywords": [
+    "ddd",
+    "guys",
+    "typescript",
+    "golang"
+  ],
+  "author": "Jumpei, ARASHI",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/jupemara/ddd-guys/issues"
+  },
+  "homepage": "https://github.com/jupemara/ddd-guys#readme",
+  "private": true
+}
