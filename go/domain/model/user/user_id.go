@@ -6,7 +6,7 @@ type UserId struct {
 	value string
 }
 
-func NewUserName(value string) (*UserId, error) {
+func NewUserId(value string) (*UserId, error) {
 	for _, v := range []bool{
 		len(value) < 4,
 		len(value) > 32,
