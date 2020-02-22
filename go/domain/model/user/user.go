@@ -10,6 +10,7 @@ type User struct {
 }
 
 func NewUser(
+	id *Id,
 	firstName string,
 	lastName string,
 ) (*User, error) {
@@ -17,7 +18,6 @@ func NewUser(
 	if err != nil {
 		return nil, errors.New("assertion error")
 	}
-	id, err := NewId()
 	if err != nil {
 		return nil, errors.New("assertion error")
 	}
