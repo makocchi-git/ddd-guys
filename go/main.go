@@ -12,7 +12,10 @@ func main() {
 	lastName := "Smith"
 	// ここでは直接アプリケーションサービス(ユースケース)を呼び出していますが、実際はCLIがあったりHTTPのハンドラーがあって、それらからfirstName, lastNameを取得する形になります
 	// 技術的複雑性は"すべて"DI(Dependency Injection: 依存性の注入)を使って外側から入れます
-	err := usecase.NewUserRegisterUsecase(repository.NewCsvRepository()).Execute(
+	err := usecase.NewUserRegisterUsecase(
+		repository.NewUuidRepository(),
+		repository.NewCsvRepository(),
+	).Execute(
 		firstName,
 		lastName,
 	)
