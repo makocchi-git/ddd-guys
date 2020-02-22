@@ -7,13 +7,14 @@ import (
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
 )
 
-type UuidRepository struct{}
+// golangには`implements`的なやつがないので、どのinterfaceになるのかがわかりやすいように接尾的にinterfaceの名前をつけました
+type UuidIdProvider struct{}
 
-func NewUuidRepository() *UuidRepository {
-	return &UuidRepository{}
+func NewUuidIdProvider() *UuidIdProvider {
+	return &UuidIdProvider{}
 }
 
-func (u *UuidRepository) NextIdentity() (*domain.Id, error) {
+func (u *UuidIdProvider) NextIdentity() (*domain.Id, error) {
 	id, err := uuid.NewUUID()
 	if err != nil {
 		return nil, errors.New("assertion error")

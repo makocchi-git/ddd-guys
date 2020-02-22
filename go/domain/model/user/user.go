@@ -18,9 +18,6 @@ func NewUser(
 	if err != nil {
 		return nil, errors.New("assertion error")
 	}
-	if err != nil {
-		return nil, errors.New("assertion error")
-	}
 	return &User{
 		id:   id,
 		name: name,
