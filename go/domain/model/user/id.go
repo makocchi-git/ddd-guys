@@ -1,11 +1,5 @@
 package user
 
-import (
-	"errors"
-
-	"github.com/google/uuid"
-)
-
 type Id struct {
 	/*
 	   - Id型の構造体を作ることで、技術的な詳細(ここではUUIDを使ってIdを生成していること)を隠蔽する
@@ -16,14 +10,10 @@ type Id struct {
 	value string
 }
 
-func NewId() (*Id, error) {
-	id, err := uuid.NewUUID()
-	if err != nil {
-		return nil, errors.New("assertion error")
-	}
+func NewId(value string) *Id {
 	return &Id{
-		value: id.String(),
-	}, nil
+		value: value,
+	}
 }
 
 func (id *Id) Value() string {

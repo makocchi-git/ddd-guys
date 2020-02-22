@@ -9,24 +9,32 @@ import (
 type UserRegister struct {
 	// 技術的な実装(具象)に依存するのではなく、ビジネス的成約、契約(ここでは、ユーザを保存するというインターフェイス)にのみ依存する
 	// とにかく技術的な詳細はクラスや外のモジュールに押し込んでいくというのがポイントですね
+	idProvider     domain.IIdProvider
 	UserRepository domain.IUserRepository
 }
 
-func NewUserRegisterUsecase(repository domain.IUserRepository) *UserRegister {
+func NewUserRegisterUsecase(
+	idProvider domain.IIdProvider,
+	repository domain.IUserRepository,
+) *UserRegister {
 	return &UserRegister{
+		idProvider:     idProvider,
 		UserRepository: repository,
 	}
 }
 
-// アプリケーションサービスを実行する際の引数はプリミティブ型のみを使う
+// アプリケーションサービスを実行する際の引数はプリミティブ型のみ(もしくは後述のCommandオブジェクト)を使う
 func (u *UserRegister) Execute(firstName, lastName string) error {
+	id, err := u.idProvider.NextIdentity()
+	if err != nil {
+		return errors.New("Failed to create new id")
+	}
 	// ここでまずビジネス条件を違反するインスタンスはそもそも作らせない
-	user, err := domain.NewUser(firstName, lastName)
+	user, err := domain.NewUser(id, firstName, lastName)
 	if err != nil {
 		return errors.New("Some given fields are invalid")
 	}
-	err = u.UserRepository.Store(user)
-	if err != nil {
+	if err = u.UserRepository.Store(user); err != nil {
 		return errors.New("Failed to register user")
 	}
 	return nil
@@ -35,14 +43,17 @@ func (u *UserRegister) Execute(firstName, lastName string) error {
 // Commandオブジェクトを使ったDTOの実装例
 // CommandオブジェクトとDTOの定義は結構曖昧ですが、doc/3.mdに定義を書いておきました
 // プレーンオブジェクトとして受け取るのを意図としているのであえて値渡しをしています(引数に与えることで副作用がないことを保証する)。ただパフォーマンスに影響があるのであれば参照渡しでgetterのみバージョンを使いましょう
-func (u *UserRegister) ExecuteWithCommand(command command) error {
+func (u *UserRegister) ExecuteWithCommand(command Command) error {
+	id, err := u.idProvider.NextIdentity()
+	if err != nil {
+		return errors.New("Failed to create new id")
+	}
 	// ここでまずビジネス条件を違反するインスタンスはそもそも作らせない
-	user, err := domain.NewUser(command.FirstName, command.LastName)
+	user, err := domain.NewUser(id, command.FirstName, command.LastName)
 	if err != nil {
 		return errors.New("Some given fields are invalid")
 	}
-	err = u.UserRepository.Store(user)
-	if err != nil {
+	if err = u.UserRepository.Store(user); err != nil {
 		return errors.New("Failed to register user")
 	}
 	return nil
@@ -64,7 +75,7 @@ command.firstName // 'John'をget
 command.firstName = 'Johhhhhhhhhhn' // コンパイルエラー
 こんな感じにできるので、ワイならTypeScriptでこの形で書くと思います
 */
-type command struct {
+type Command struct {
 	FirstName string
 	LastName  string
 }
