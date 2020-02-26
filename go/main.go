@@ -14,6 +14,15 @@ import (
 )
 
 func main() {
+	// go っぽく pkg/ にいろいろ入れてみた
+	// 個人的にはこういう構成の方が見やすいかも
+	// でも package 名は苦労しますな・・
+	// 今回は domain/user にして domainuser という意味で "duser" にしてある
+	// usecase の package 名は usecase の u を接頭語としてみたけども・・
+
+	// 試しに Random String で生成する IDP と保存するんじゃなくて STDOUT に出力する Store() を作ってみた
+	// repository の directory 構成的に .../backend と .../id_provier みたいに細かくしたんだけど
+	// そういうのはアリなのかな？
 
 	// flags
 	var idp = flag.String("id-provider", "uuid", "an id provider[uuid random]")
@@ -47,9 +56,6 @@ func main() {
 	firstName := "John"
 	lastName := "Smith"
 
-	// 試しに Random String で生成する IDP を作ってみた
-	// repository の directory 構成的に .../backend と .../id_provier みたいに細かくしたんだけど
-	// そういうのはアリなのかな？
 	err := register.NewUserRegisterUsecase(
 		idpRegister,
 		backendRegister,
