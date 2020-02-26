@@ -3,6 +3,10 @@ github.com/golang/mock v1.4.0/go.mod h1:UOMv5ysSaYNkG+OFQykRIcU/QvvxJf3p21QfJ2Bt
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/jupemara/ddd-guys v0.0.0-20200129083116-056407f402a0 h1:ZMjxKKYijo+5kQ2UMwbEp5CltGrAQbHcTNsOiykbA3I=
+github.com/jupemara/ddd-guys v0.0.0-20200222190200-c4acbfbf90d9 h1:i8xbzjLiuaSLP+BSPEPWyOQiSFVK0paskWMdNIQpeR8=
+github.com/jupemara/ddd-guys/go v0.0.0-20200222190200-c4acbfbf90d9 h1:xCC1RlDXlrWQwNqXvkhOzGBEpZbptJ2TLtW/meTqYFc=
+github.com/jupemara/ddd-guys/go v0.0.0-20200222190200-c4acbfbf90d9/go.mod h1:s6qaiS87a2LgP4/YD82iWBicm3cj3CDLoO2l5jaRAQM=
+github.com/makocchi-git/ddd-guys v0.0.0-20200222190200-c4acbfbf90d9 h1:s8fA2x+INVCiale8Bpn2ZqxTmjq0xhF0KAJtOaKOCgE=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=

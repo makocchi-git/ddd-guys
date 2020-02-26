@@ -1,20 +1,58 @@
 package main
 
 import (
+	"flag"
 	"log"
+	"os"
 
-	repository "github.com/jupemara/ddd-guys/go/adapter/repository/user"
-	usecase "github.com/jupemara/ddd-guys/go/usecase/user_register"
+	duser "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
+
+	backend "github.com/makocchi-git/ddd-guys/go/pkg/repository/user_register/backend"
+	idprovider "github.com/makocchi-git/ddd-guys/go/pkg/repository/user_register/id_provider"
+
+	register "github.com/makocchi-git/ddd-guys/go/pkg/usecase/user_register"
 )
 
 func main() {
+
+	// flags
+	var idp = flag.String("id-provider", "uuid", "an id provider[uuid random]")
+	var be = flag.String("backend", "csv", "a backend that stores user data [csv stdout]")
+	flag.Parse()
+
+	var idpRegister duser.IIdProvider
+	switch *idp {
+	case "uuid":
+		idpRegister = idprovider.NewUUIDIDProvider()
+	case "random":
+		idpRegister = idprovider.NewRandomStringIDProvider(32)
+	default:
+		log.Printf("Invalid id provider [%s]", *idp)
+		os.Exit(1)
+	}
+
+	// IIdStorer っていう名前があまりイケてない・・
+	// backend って使っちゃっているのでわかりにくくなっている可能性がある
+	var backendRegister duser.IIdStorer
+	switch *be {
+	case "csv":
+		backendRegister = backend.NewCSVBackend()
+	case "stdout":
+		backendRegister = backend.NewSTDOUTBackend()
+	default:
+		log.Printf("Invalid backend [%s]", *be)
+		os.Exit(1)
+	}
+
 	firstName := "John"
 	lastName := "Smith"
-	// ここでは直接アプリケーションサービス(ユースケース)を呼び出していますが、実際はCLIがあったりHTTPのハンドラーがあって、それらからfirstName, lastNameを取得する形になります
-	// 技術的複雑性は"すべて"DI(Dependency Injection: 依存性の注入)を使って外側から入れます
-	err := usecase.NewUserRegisterUsecase(
-		repository.NewUuidRepository(),
-		repository.NewCsvRepository(),
+
+	// 試しに Random String で生成する IDP を作ってみた
+	// repository の directory 構成的に .../backend と .../id_provier みたいに細かくしたんだけど
+	// そういうのはアリなのかな？
+	err := register.NewUserRegisterUsecase(
+		idpRegister,
+		backendRegister,
 	).Execute(
 		firstName,
 		lastName,
