@@ -8,13 +8,13 @@ import (
 )
 
 // 出力するだけだから debug 用途
-type STDOUTBackend struct{}
+type STDOUTRepository struct{}
 
-func NewSTDOUTBackend() *STDOUTBackend {
-	return &STDOUTBackend{}
+func NewSTDOUTRepository() *STDOUTRepository {
+	return &STDOUTRepository{}
 }
 
-func (r *STDOUTBackend) Store(user *domain.User) error {
+func (r *STDOUTRepository) Store(user *domain.User) error {
 	id := user.Id()
 	firstName := user.Name().FirstName()
 	lastName := user.Name().LastName()

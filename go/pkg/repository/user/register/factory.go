@@ -1,4 +1,4 @@
-package provider
+package register
 
 import (
 	"fmt"
@@ -7,20 +7,20 @@ import (
 )
 
 var valid = []string{
-	"uuid",
-	"random",
+	"csv",
+	"stdout",
 }
 
-func CreateIdProvider(selector string) (domain.IIdProvider, error) {
+func CreateUserRepository(selector string) (domain.IUserRepository, error) {
 	if err := validSelector(selector); err != nil {
 		return nil, err
 	}
-	if selector == "random" {
-		return NewRandomStringIDProvider(32), nil
+	if selector == "stdout" {
+		return NewSTDOUTRepository(), nil
 	}
 
-	// デフォルトだと uuid にしているので、なんとなく uuid をこちらに配置
-	return NewUUIDIDProvider(), nil
+	// デフォルトだと csv にしているので、なんとなく uuid をこちらに配置
+	return NewCSVRepository(), nil
 }
 
 func validSelector(selector string) error {

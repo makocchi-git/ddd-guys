@@ -7,12 +7,12 @@ import (
 	domain "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
 )
 
-type CSVBackend struct{}
+type CSVRepository struct{}
 
-func NewCSVBackend() *CSVBackend {
-	return &CSVBackend{}
+func NewCSVRepository() *CSVRepository {
+	return &CSVRepository{}
 }
-func (r *CSVBackend) Store(user *domain.User) error {
+func (r *CSVRepository) Store(user *domain.User) error {
 	id := user.Id()
 	firstName := user.Name().FirstName()
 	lastName := user.Name().LastName()
