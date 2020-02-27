@@ -29,7 +29,7 @@ func main() {
 
 	// flags
 	var idp = flag.String("id-provider", "uuid", "an id provider [uuid random]")
-	var be = flag.String("backend", "csv", "a backend that stores user data [csv stdout]")
+	var re = flag.String("repository", "csv", "a backend that stores user data [csv stdout]")
 	flag.Parse()
 
 	firstName := "John"
@@ -42,7 +42,7 @@ func main() {
 		log.Fatalf("Failed to create an id provider. raw error message: %v", ierr)
 		os.Exit(1)
 	}
-	repositoryRegister, rerr := repository.CreateUserRepository(*be)
+	repositoryRegister, rerr := repository.CreateUserRepository(*re)
 	if rerr != nil {
 		log.Fatalf("Failed to create repository register. raw error message: %v", rerr)
 		os.Exit(1)

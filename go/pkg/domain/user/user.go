@@ -2,11 +2,13 @@ package user
 
 import (
 	"errors"
+	"time"
 )
 
 type User struct {
-	id   *Id
-	name *Name
+	id           *Id
+	name         *Name
+	registeredAt *RegisteredAt
 }
 
 func NewUser(id *Id, firstName, lastName string) (*User, error) {
@@ -15,8 +17,9 @@ func NewUser(id *Id, firstName, lastName string) (*User, error) {
 		return nil, err
 	}
 	return &User{
-		id:   id,
-		name: name,
+		id:           id,
+		name:         name,
+		registeredAt: NewRegisteredAt(),
 	}, nil
 }
 
@@ -35,4 +38,8 @@ func (u *User) Name() *Name {
 
 func (u *User) Id() string {
 	return u.id.Value()
+}
+
+func (u *User) RegisteredAt() time.Time {
+	return u.registeredAt.TimeStamp()
 }

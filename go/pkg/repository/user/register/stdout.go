@@ -18,7 +18,8 @@ func (r *STDOUTRepository) Store(user *domain.User) error {
 	id := user.Id()
 	firstName := user.Name().FirstName()
 	lastName := user.Name().LastName()
+	timeStamp := user.RegisteredAt().String()
 
-	fmt.Fprintf(os.Stdout, "%s,%s,%s\n", id, firstName, lastName)
+	fmt.Fprintf(os.Stdout, "%s,%s,%s,%s\n", timeStamp, id, firstName, lastName)
 	return nil
 }

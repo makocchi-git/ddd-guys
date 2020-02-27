@@ -16,13 +16,14 @@ func (r *CSVRepository) Store(user *domain.User) error {
 	id := user.Id()
 	firstName := user.Name().FirstName()
 	lastName := user.Name().LastName()
+	timeStamp := user.RegisteredAt().String()
 	file, err := os.OpenFile("/tmp/users.csv", os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0600)
 	defer file.Close()
 	if err != nil {
 		return err
 	}
 	writer := csv.NewWriter(file)
-	err = writer.Write([]string{id, firstName, lastName})
+	err = writer.Write([]string{timeStamp, id, firstName, lastName})
 	if err != nil {
 		return err
 	}
