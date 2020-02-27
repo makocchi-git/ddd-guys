@@ -23,6 +23,7 @@ func CreateUserRepository(selector string) (domain.IUserRepository, error) {
 	return NewCSVRepository(), nil
 }
 
+// validSelector は他でも使いまわしているので、 util 化を検討かな
 func validSelector(selector string) error {
 	for _, v := range valid {
 		if v == selector {
