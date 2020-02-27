@@ -19,7 +19,7 @@ func CreateUserRepository(selector string) (domain.IUserRepository, error) {
 		return NewSTDOUTRepository(), nil
 	}
 
-	// デフォルトだと csv にしているので、なんとなく uuid をこちらに配置
+	// デフォルトだと csv にしているので、なんとなく csv をこちらに配置
 	return NewCSVRepository(), nil
 }
 
