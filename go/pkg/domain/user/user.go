@@ -1,4 +1,4 @@
-package duser
+package user
 
 import (
 	"errors"

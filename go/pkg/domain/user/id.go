@@ -1,4 +1,4 @@
-package duser
+package user
 
 type Id struct {
 	value string

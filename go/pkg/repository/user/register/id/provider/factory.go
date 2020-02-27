@@ -1,7 +1,9 @@
-package idprovider
+package provider
 
 import (
-	duser "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
+	"fmt"
+
+	domain "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
 )
 
 var valid = string{
@@ -9,16 +11,16 @@ var valid = string{
 	"random",
 }
 
-func CreateIdProvider(selector string) (duser.IIdProvider, error) {
+func CreateIdProvider(selector string) (domain.IIdProvider, error) {
 	if err := validSelector(selector); err != nil {
-		return nil, err;
-	}
-	if selector == "uuid" {
-		return idprovider.NewUUIDIDProvider(), nil
+		return nil, err
 	}
 	if selector == "random" {
 		return idprovider.NewRandomStringIDProvider(32), nil
 	}
+
+	// デフォルトだと uuid にしているので、なんとなく uuid をこちらに配置
+	return idprovider.NewUUIDIDProvider(), nil
 }
 
 func validSelector(selector string) error {

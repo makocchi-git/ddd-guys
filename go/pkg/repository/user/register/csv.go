@@ -1,10 +1,10 @@
-package backend
+package register
 
 import (
 	"encoding/csv"
 	"os"
 
-	duser "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
+	domain "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
 )
 
 type CSVBackend struct{}
@@ -12,7 +12,7 @@ type CSVBackend struct{}
 func NewCSVBackend() *CSVBackend {
 	return &CSVBackend{}
 }
-func (r *CSVBackend) Store(user *duser.User) error {
+func (r *CSVBackend) Store(user *domain.User) error {
 	id := user.Id()
 	firstName := user.Name().FirstName()
 	lastName := user.Name().LastName()

@@ -1,10 +1,10 @@
-package backend
+package register
 
 import (
 	"fmt"
 	"os"
 
-	duser "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
+	domain "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
 )
 
 // 出力するだけだから debug 用途
@@ -14,7 +14,7 @@ func NewSTDOUTBackend() *STDOUTBackend {
 	return &STDOUTBackend{}
 }
 
-func (r *STDOUTBackend) Store(user *duser.User) error {
+func (r *STDOUTBackend) Store(user *domain.User) error {
 	id := user.Id()
 	firstName := user.Name().FirstName()
 	lastName := user.Name().LastName()

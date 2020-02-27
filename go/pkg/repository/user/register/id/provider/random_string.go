@@ -1,10 +1,10 @@
-package idprovider
+package provider
 
 import (
 	"math/rand"
 	"time"
 
-	duser "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
+	domain "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
 )
 
 func init() {
@@ -23,10 +23,10 @@ func NewRandomStringIDProvider(n int) *RandomStringIDProvider {
 	}
 }
 
-func (u *RandomStringIDProvider) NextIdentity() (*duser.Id, error) {
+func (u *RandomStringIDProvider) NextIdentity() (*domain.Id, error) {
 	b := make([]byte, u.n)
 	for i := range b {
 		b[i] = Letters[rand.Intn(len(Letters))]
 	}
-	return duser.NewId(string(b)), nil
+	return domain.NewId(string(b)), nil
 }

@@ -1,22 +1,20 @@
-package uregister
+package register
 
 import (
 	"fmt"
 
-	duser "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
+	domain "github.com/makocchi-git/ddd-guys/go/pkg/domain/user"
 )
 
 type UserRegister struct {
-	// idProvider : generate id
-	// idStoreer : store id
-	idProvider duser.IIdProvider
-	idStorer   duser.IIdStorer
+	idProvider     domain.IIdProvider
+	userRepository domain.IUserRepository
 }
 
-func NewUserRegisterUsecase(idProvider duser.IIdProvider, idStorer duser.IIdStorer) *UserRegister {
+func NewUserRegisterUsecase(idProvider domain.IIdProvider, userRepository domain.IUserRepository) *UserRegister {
 	return &UserRegister{
-		idProvider: idProvider,
-		idStorer:   idStorer,
+		idProvider:     idProvider,
+		userRepository: userRepository,
 	}
 }
 
@@ -27,11 +25,11 @@ func (u *UserRegister) Execute(firstName, lastName string) error {
 		return fmt.Errorf("Failed to create new id [%v]", err)
 	}
 	// create user context
-	user, err := duser.NewUser(id, firstName, lastName)
+	user, err := domain.NewUser(id, firstName, lastName)
 	if err != nil {
 		return fmt.Errorf("Some given fields are invalid [%v]", err)
 	}
-	if err = u.idStorer.Store(user); err != nil {
+	if err = u.userRepository.Store(user); err != nil {
 		return fmt.Errorf("Failed to register user [%v]", err)
 	}
 	return nil
