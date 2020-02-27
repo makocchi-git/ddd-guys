@@ -23,6 +23,7 @@ func CreateIdProvider(selector string) (domain.IIdProvider, error) {
 	return NewUUIDIDProvider(), nil
 }
 
+// validSelector は他でも使いまわしているので、 util 化を検討かな
 func validSelector(selector string) error {
 	for _, v := range valid {
 		if v == selector {
