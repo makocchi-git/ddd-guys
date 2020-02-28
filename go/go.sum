@@ -7,6 +7,7 @@ github.com/makocchi-git/ddd-guys v0.0.0-20200227130757-75cec500dc0d h1:5cXz0XZ0Z
 github.com/makocchi-git/ddd-guys v0.0.0-20200227133239-00c9410020c8 h1:Z6PFDmbvCgArCj+GhWkjbwDQsPlsqBb6iWetRcbA+VM=
 github.com/makocchi-git/ddd-guys v0.0.0-20200228060909-9b9e7df2efcb h1:rgkspbgeHGXqsk804kRXYXz7pXj7KkKYay8pEFtpKas=
 github.com/makocchi-git/ddd-guys v0.0.0-20200228070505-a683980f6676 h1:bHdCEJawdyE+a6orb9QB9xy+p9of8K0uDD/BvojlOUE=
+github.com/makocchi-git/ddd-guys v0.0.0-20200228093819-ca9c4a673cb6 h1:Q7WP3OSDgOOMcLQWdbJcTL/eELZCTrcYi3RFy0htnbc=
 github.com/makocchi-git/ddd-guys/go v0.0.0-20200227105548-2bc4578182f0/go.mod h1:9i0Vxxrgzu9k4G9yN0IBMeiCt4Dcz/6OsgpvRuhyoJw=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=

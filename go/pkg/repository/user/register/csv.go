@@ -42,10 +42,9 @@ func (r *CSVRepository) Store(user *domain.User) error {
 	}
 
 	// write user data
-	if err := writeIntoCSV(fileName, timeStamp, id, firstName, lastName); err != nil {
-		return err
-	}
-	return nil
+	// if err := writeIntoCSV(...); err != nil { return err }
+	// と丁寧に書きたくなるけどもここはスマートに
+	return writeIntoCSV(fileName, timeStamp, id, firstName, lastName)
 }
 
 func isDupulicatedName(fileName, firstName, lastName string) (bool, error) {
