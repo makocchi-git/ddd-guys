@@ -4,6 +4,8 @@ github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/jupemara/ddd-guys/go v0.0.0-20200222190200-c4acbfbf90d9/go.mod h1:s6qaiS87a2LgP4/YD82iWBicm3cj3CDLoO2l5jaRAQM=
 github.com/makocchi-git/ddd-guys v0.0.0-20200222190200-c4acbfbf90d9 h1:s8fA2x+INVCiale8Bpn2ZqxTmjq0xhF0KAJtOaKOCgE=
 github.com/makocchi-git/ddd-guys v0.0.0-20200227130757-75cec500dc0d h1:5cXz0XZ0Zhp1o5n9ALAgVcjeKKemqD3+x/8mcbXPKyY=
+github.com/makocchi-git/ddd-guys v0.0.0-20200227133239-00c9410020c8 h1:Z6PFDmbvCgArCj+GhWkjbwDQsPlsqBb6iWetRcbA+VM=
+github.com/makocchi-git/ddd-guys v0.0.0-20200228060909-9b9e7df2efcb h1:rgkspbgeHGXqsk804kRXYXz7pXj7KkKYay8pEFtpKas=
 github.com/makocchi-git/ddd-guys/go v0.0.0-20200227105548-2bc4578182f0/go.mod h1:9i0Vxxrgzu9k4G9yN0IBMeiCt4Dcz/6OsgpvRuhyoJw=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
