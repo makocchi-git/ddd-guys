@@ -1,4 +1,5 @@
 package util
+// stringsetにするなら、packageわけて、util/set とかにするのもありかもですねー
 
 /*
 usage:
