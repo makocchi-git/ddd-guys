@@ -2,6 +2,8 @@ package user
 
 import (
 	"encoding/csv"
+	"errors"
+	"io"
 	"os"
 
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
@@ -33,4 +35,33 @@ func (r *CsvRepository) Store(user *domain.User) error {
 	}
 	writer.Flush()
 	return nil
+}
+
+func (r *CsvRepository) FindById(id *domain.Id) (*domain.User, error) {
+	file, err := os.OpenFile("/tmp/users.csv", os.O_RDONLY, 0600)
+	if err != nil {
+		return nil, err
+	}
+	reader := csv.NewReader(file)
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+		if id.Value() == record[0] {
+			user, err := domain.NewUser(
+				domain.NewId(record[0]),
+				record[1],
+				record[2],
+			)
+			if err != nil {
+				return nil, err
+			}
+			return user, nil
+		}
+	}
+	return nil, errors.New("Couldn't find specified user")
 }
