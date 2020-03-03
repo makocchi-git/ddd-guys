@@ -1,4 +1,4 @@
-package user_register
+package user
 
 import (
 	"errors"
