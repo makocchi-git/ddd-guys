@@ -1,7 +1,7 @@
 package user
 
 import (
-	"errors"
+	"fmt"
 
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
 )
@@ -64,7 +64,7 @@ func (u *UserUpdateUsecase) Execute(command UpdateCommand) error {
 	}
 	err = u.repository.Update(user)
 	if err != nil {
-		return errors.New("Failed to update")
+		return fmt.Errorf("Failed to update [%v]", err)
 	}
 	return nil
 }
