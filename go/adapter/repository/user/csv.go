@@ -88,12 +88,16 @@ func (r *CsvRepository) Update(user *domain.User) error {
 
 	defer fileLock.Unlock()
 
-	rfile, err := os.OpenFile("/tmp/users.csv", os.O_RDONLY, 0600)
+	// 後に書き込みもするので O_RDWR
+	// このケースだと Truncate() と Seek() が必要になるので若干めんどくさい
+	// read と write で 2 回 Open したほうがスマートかもしれない
+	file, err := os.OpenFile("/tmp/users.csv", os.O_RDWR, 0600)
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
-	reader := csv.NewReader(rfile)
+	reader := csv.NewReader(file)
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
@@ -114,14 +118,14 @@ func (r *CsvRepository) Update(user *domain.User) error {
 		}
 	}
 
-	// 書き込みの為に再度 Open
-	wfile, err := os.OpenFile("/tmp/users.csv", os.O_WRONLY, 0600)
-	if err != nil {
+	// truncate & seek しないと追記される
+	if err := file.Truncate(0); err != nil {
 		return err
 	}
-	defer wfile.Close()
-	out := csv.NewWriter(wfile)
+	if _, err := file.Seek(0, 0); err != nil {
+		return err
+	}
 
 	// WriteAll が error を返すので、そのまま return に渡す
-	return out.WriteAll(newRecords)
+	return csv.NewWriter(file).WriteAll(newRecords)
 }
