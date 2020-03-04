@@ -8,6 +8,7 @@ import (
 )
 
 // 1 行で書こうと思えば書けるんだけど、こっちのほうが "何が valid なのか" が分かりやすくなるかな
+// いいと思います!わかりやすい
 var validStringSet = util.NewStringSet([]string{
 	"uuid",
 	"random",
