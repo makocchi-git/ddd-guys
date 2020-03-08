@@ -13,6 +13,8 @@ import (
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
 )
 
+const collectionPath = "users"
+
 // Repository に状態を持つ形にしようと思ったが、Client の Close処理 を
 // Interface に持たせるべきではないと思ったため、レシーバーそれぞれで初期化を行う形式に修正した
 type FirestoreRepository struct{}
@@ -45,7 +47,7 @@ func (r *FirestoreRepository) FindById(id *domain.Id) (*domain.User, error) {
 	}
 	defer client.Close()
 
-	docsnap, err := client.Doc("users/" + id.Value()).Get(ctx)
+	docsnap, err := client.Doc(collectionPath + "/" + id.Value()).Get(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +75,7 @@ func (r *FirestoreRepository) Update(user *domain.User) error {
 
 func (r *FirestoreRepository) upsert(user *domain.User) error {
 	ctx, client, err := r.initializeFirestore()
-	wr, err := client.Collection("users").Doc(user.Id()).Set(ctx, firestoreUser{
+	wr, err := client.Collection(collectionPath).Doc(user.Id()).Set(ctx, firestoreUser{
 		FirstName: user.Name().FirstName(),
 		LastName:  user.Name().LastName(),
 	})
