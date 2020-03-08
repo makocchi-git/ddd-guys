@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"os"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	"cloud.google.com/go/firestore"
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
 )
@@ -19,24 +22,19 @@ func NewFirestoreRepository() *FirestoreRepository {
 }
 
 func (r *FirestoreRepository) Store(user *domain.User) error {
-	ctx, client, err := r.initializeFirestore()
+	existedUser, err := r.FindById(domain.NewId(user.Id()))
+	if err != nil {
+		if status.Code(err) != codes.NotFound {
+			return err
+		}
+	}
+	if existedUser != nil {
+		return errors.New("Specified user already exists")
+	}
+	err = r.upsert(user)
 	if err != nil {
 		return err
 	}
-	defer client.Close()
-
-	wr, err := client.Collection("users").Doc(user.Id()).Create(ctx, firestoreUser{
-		FirstName: user.Name().FirstName(),
-		LastName:  user.Name().LastName(),
-	})
-	if err != nil {
-		return err
-	}
-	fmt.Printf("User: %v %v (ID: %v) is created at %v\n",
-		user.Name().FirstName(),
-		user.Name().LastName(),
-		user.Id(),
-		wr.UpdateTime)
 	return nil
 }
 
@@ -59,20 +57,31 @@ func (r *FirestoreRepository) FindById(id *domain.Id) (*domain.User, error) {
 }
 
 func (r *FirestoreRepository) Update(user *domain.User) error {
-	ctx, client, err := r.initializeFirestore()
+	_, err := r.FindById(domain.NewId(user.Id()))
+	if err != nil {
+		if status.Code(err) == codes.NotFound {
+			return errors.New("Specified user is not found")
+		}
+		return err
+	}
+	err = r.upsert(user)
 	if err != nil {
 		return err
 	}
-	defer client.Close()
+	return nil
+}
 
-	wr, err := client.Collection("users").Doc(user.Id()).Update(ctx, []firestore.Update{
-		{Path: "firstname", Value: user.Name().FirstName()},
-		{Path: "lastname", Value: user.Name().LastName()},
+func (r *FirestoreRepository) upsert(user *domain.User) error {
+	ctx, client, err := r.initializeFirestore()
+	wr, err := client.Collection("users").Doc(user.Id()).Set(ctx, firestoreUser{
+		FirstName: user.Name().FirstName(),
+		LastName:  user.Name().LastName(),
 	})
 	if err != nil {
 		return err
 	}
-	fmt.Printf("User: %v %v (ID: %v) is updated at %v\n",
+
+	fmt.Printf("User: %v %v (ID: %v) is upserted at %v\n",
 		user.Name().FirstName(),
 		user.Name().LastName(),
 		user.Id(),
