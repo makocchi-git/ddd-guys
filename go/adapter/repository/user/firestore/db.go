@@ -1,4 +1,4 @@
-package user
+package firestore
 
 import (
 	"context"
@@ -6,17 +6,9 @@ import (
 	"fmt"
 	"os"
 
-	firestore "cloud.google.com/go/firestore"
+	"cloud.google.com/go/firestore"
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
 )
-
-// Firestore用 User struct
-// 今回は /users/UserID のドキュメント、その中に FirstName, LastName でフィールドを持つようにしている
-// /users/[auto generated ID] の中に ID, FirstName, LastName フィールドがある形式と迷った部分
-type firestoreUser struct {
-	FirstName string `firestore:"firstname"`
-	LastName  string `firestore:"lastname"`
-}
 
 // Repository に状態を持つ形にしようと思ったが、Client の Close処理 を
 // Interface に持たせるべきではないと思ったため、レシーバーそれぞれで初期化を行う形式に修正した
