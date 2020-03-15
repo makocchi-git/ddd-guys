@@ -1,7 +1,7 @@
 package user
 
 import (
-	"errors"
+	"github.com/jupemara/ddd-guys/go/domain/errors"
 )
 
 type Name struct {
@@ -15,7 +15,10 @@ func NewName(firstName string, lastName string) (*Name, error) {
 		len(lastName) < 1,
 	} {
 		if v {
-			return nil, errors.New("assertion error")
+			return nil, errors.New(
+				"user name error",
+				errors.UserNameError,
+			)
 		}
 	}
 	return &Name{firstName, lastName}, nil
