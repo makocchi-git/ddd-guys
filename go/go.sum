@@ -52,6 +52,7 @@ github.com/jupemara/ddd-guys v0.0.0-20200129083116-056407f402a0 h1:ZMjxKKYijo+5k
 github.com/jupemara/ddd-guys v0.0.0-20200222190200-c4acbfbf90d9 h1:i8xbzjLiuaSLP+BSPEPWyOQiSFVK0paskWMdNIQpeR8=
 github.com/jupemara/ddd-guys v0.0.0-20200303115535-ae5279caac78 h1:Qc501Q0bnNBgFlGRb8/AcxQ0aOqROiVl0AjfeX+YyD4=
 github.com/jupemara/ddd-guys v0.0.0-20200304153639-7036e11828de h1:9u2diqljhkdZCzw+eSEibpoAzkAqHsa0rODeLPzlKYU=
+github.com/jupemara/ddd-guys v0.0.0-20200308132419-4cc33561da76 h1:rlNug+hoFRR2Q8ogun0xjqGoqVthqTRELjuZZsqACn8=
 github.com/jupemara/ddd-guys/go v0.0.0-20200222190200-c4acbfbf90d9/go.mod h1:s6qaiS87a2LgP4/YD82iWBicm3cj3CDLoO2l5jaRAQM=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
