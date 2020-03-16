@@ -20,7 +20,7 @@ type HttpUserFindController struct {
 }
 
 // 関数名にNewを使った場合
-func NewFindConroller(usecase *user.UserFindUsecase, output IOutputPort) *HttpUserFindController {
+func NewFindController(usecase *user.UserFindUsecase, output IOutputPort) *HttpUserFindController {
 	return &HttpUserFindController{
 		usecase: usecase,
 		output:  output,

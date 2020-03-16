@@ -31,7 +31,7 @@ type HttpUserUpdateController struct {
 	output  IOutputPort
 }
 
-func NewUpdateConroller(usecase *user.UserUpdateUsecase, output IOutputPort) *HttpUserUpdateController {
+func NewUpdateController(usecase *user.UserUpdateUsecase, output IOutputPort) *HttpUserUpdateController {
 	return &HttpUserUpdateController{
 		usecase: usecase,
 		output:  output,

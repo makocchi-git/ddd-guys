@@ -30,7 +30,7 @@ type HttpUserRegistController struct {
 	output  IOutputPort
 }
 
-func NewRegistConroller(usecase *user.UserRegistUsecase, output IOutputPort) *HttpUserRegistController {
+func NewRegistController(usecase *user.UserRegistUsecase, output IOutputPort) *HttpUserRegistController {
 	return &HttpUserRegistController{
 		usecase: usecase,
 		output:  output,
