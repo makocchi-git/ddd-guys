@@ -27,12 +27,6 @@ func NewFindConroller(usecase *user.UserFindUsecase, output IOutputPort) *HttpUs
 	}
 }
 
-// 	return &HttpUserFindController{
-// 		usecase,
-// 		JsonOutputPort,
-// 	},
-// }
-
 func (c *HttpUserFindController) Register(url string, mux *http.ServeMux) {
 	mux.HandleFunc(url, c.HandlerFunc)
 }
