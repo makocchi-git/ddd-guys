@@ -6,7 +6,7 @@ import (
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
 )
 
-type UserRegistUsecase struct {
+type UserRegisterUsecase struct {
 	// 技術的な実装(具象)に依存するのではなく、ビジネス的成約、契約(ここでは、ユーザを保存するというインターフェイス)にのみ依存する
 	// とにかく技術的な詳細はクラスや外のモジュールに押し込んでいくというのがポイントですね
 	idProvider     domain.IIdProvider
@@ -16,15 +16,15 @@ type UserRegistUsecase struct {
 func NewUserRegisterUsecase(
 	idProvider domain.IIdProvider,
 	repository domain.IUserRepository,
-) *UserRegistUsecase {
-	return &UserRegistUsecase{
+) *UserRegisterUsecase {
+	return &UserRegisterUsecase{
 		idProvider:     idProvider,
 		UserRepository: repository,
 	}
 }
 
 // アプリケーションサービスを実行する際の引数はプリミティブ型のみ(もしくは後述のCommandオブジェクト)を使う
-func (u *UserRegistUsecase) Execute(firstName, lastName string) error {
+func (u *UserRegisterUsecase) Execute(firstName, lastName string) error {
 	id, err := u.idProvider.NextIdentity()
 	if err != nil {
 		return errors.New("Failed to create new id")
@@ -43,7 +43,7 @@ func (u *UserRegistUsecase) Execute(firstName, lastName string) error {
 // Commandオブジェクトを使ったDTOの実装例
 // CommandオブジェクトとDTOの定義は結構曖昧ですが、doc/3.mdに定義を書いておきました
 // プレーンオブジェクトとして受け取るのを意図としているのであえて値渡しをしています(引数に与えることで副作用がないことを保証する)。ただパフォーマンスに影響があるのであれば参照渡しでgetterのみバージョンを使いましょう
-func (u *UserRegistUsecase) ExecuteWithCommand(command Command) error {
+func (u *UserRegisterUsecase) ExecuteWithCommand(command Command) error {
 	id, err := u.idProvider.NextIdentity()
 	if err != nil {
 		return errors.New("Failed to create new id")

@@ -22,7 +22,7 @@ type updateResponse struct {
 }
 
 const (
-	msgUpdateSuccess = "succeeded to update user"
+	msgUpdateSuccess = "succeeded in updating user"
 	msgUpdateFail    = "failed to update user"
 )
 

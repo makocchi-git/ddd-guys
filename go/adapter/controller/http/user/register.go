@@ -9,39 +9,39 @@ import (
 	usecase "github.com/jupemara/ddd-guys/go/usecase/user"
 )
 
-type registRequest struct {
+type registerRequest struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 }
 
 // 単純に結果を msg として返す
 // 場合によってはオリジナルの return code が増えることもあるかもしれない
-type registResponse struct {
+type registerResponse struct {
 	Msg string `json:"msg"`
 }
 
 const (
-	msgRegistSuccess = "succeeded to regist user"
-	msgRegistFail    = "failed to regist user"
+	msgRegisterSuccess = "succeeded in registering user"
+	msgRegisterFail    = "failed to register user"
 )
 
-type HttpUserRegistController struct {
-	usecase *usecase.UserRegistUsecase
+type HttpUserRegisterController struct {
+	usecase *usecase.UserRegisterUsecase
 	output  IOutputPort
 }
 
-func NewRegistController(usecase *user.UserRegistUsecase, output IOutputPort) *HttpUserRegistController {
-	return &HttpUserRegistController{
+func NewRegisterController(usecase *user.UserRegisterUsecase, output IOutputPort) *HttpUserRegisterController {
+	return &HttpUserRegisterController{
 		usecase: usecase,
 		output:  output,
 	}
 }
 
-func (c *HttpUserRegistController) Register(url string, mux *http.ServeMux) {
+func (c *HttpUserRegisterController) Register(url string, mux *http.ServeMux) {
 	mux.HandleFunc(url, c.HandlerFunc)
 }
 
-func (c *HttpUserRegistController) HandlerFunc(
+func (c *HttpUserRegisterController) HandlerFunc(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -57,7 +57,7 @@ func (c *HttpUserRegistController) HandlerFunc(
 	body := json.NewDecoder(r.Body)
 	body.DisallowUnknownFields()
 
-	var reqBody registRequest
+	var reqBody registerRequest
 	if err := body.Decode(&reqBody); err != nil {
 		// return error
 		http.Error(w, "invalid json format", http.StatusBadRequest)
@@ -67,12 +67,12 @@ func (c *HttpUserRegistController) HandlerFunc(
 	firstName := reqBody.FirstName
 	lastName := reqBody.LastName
 	if err := c.usecase.Execute(firstName, lastName); err != nil {
-		http.Error(w, msgRegistFail, http.StatusInternalServerError)
+		http.Error(w, msgRegisterFail, http.StatusInternalServerError)
 		return
 	}
 
-	res, err := json.Marshal(registResponse{
-		Msg: msgRegistSuccess,
+	res, err := json.Marshal(registerResponse{
+		Msg: msgRegisterSuccess,
 	})
 	if err != nil {
 		http.Error(w, "unexpected error occurred", http.StatusInternalServerError)
