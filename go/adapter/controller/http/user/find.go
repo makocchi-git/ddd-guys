@@ -16,14 +16,14 @@ type findResponse struct {
 
 type HttpUserFindController struct {
 	usecase *usecase.UserFindUsecase
-	output  IOutputPort
+	// TODO:
+	// output  IOutputPort
 }
 
 // 関数名にNewを使った場合
-func NewFindController(usecase *user.UserFindUsecase, output IOutputPort) *HttpUserFindController {
+func NewFindController(usecase *user.UserFindUsecase) *HttpUserFindController {
 	return &HttpUserFindController{
 		usecase: usecase,
-		output:  output,
 	}
 }
 

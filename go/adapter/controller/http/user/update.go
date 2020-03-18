@@ -28,13 +28,13 @@ const (
 
 type HttpUserUpdateController struct {
 	usecase *usecase.UserUpdateUsecase
-	output  IOutputPort
+	// TODO:
+	// output  IOutputPort
 }
 
-func NewUpdateController(usecase *user.UserUpdateUsecase, output IOutputPort) *HttpUserUpdateController {
+func NewUpdateController(usecase *user.UserUpdateUsecase) *HttpUserUpdateController {
 	return &HttpUserUpdateController{
 		usecase: usecase,
-		output:  output,
 	}
 }
 

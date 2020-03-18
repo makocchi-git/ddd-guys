@@ -27,13 +27,13 @@ const (
 
 type HttpUserRegisterController struct {
 	usecase *usecase.UserRegisterUsecase
-	output  IOutputPort
+	// TODO:
+	// output  IOutputPort
 }
 
-func NewRegisterController(usecase *user.UserRegisterUsecase, output IOutputPort) *HttpUserRegisterController {
+func NewRegisterController(usecase *user.UserRegisterUsecase) *HttpUserRegisterController {
 	return &HttpUserRegisterController{
 		usecase: usecase,
-		output:  output,
 	}
 }
 
