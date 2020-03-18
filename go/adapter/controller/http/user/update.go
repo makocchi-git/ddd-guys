@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/go-openapi/runtime/middleware/header"
+	util "github.com/jupemara/ddd-guys/go/adapter/controller/http/util"
 	"github.com/jupemara/ddd-guys/go/usecase/user"
+
 	usecase "github.com/jupemara/ddd-guys/go/usecase/user"
 )
 
@@ -47,12 +48,9 @@ func (c *HttpUserUpdateController) HandlerFunc(
 	r *http.Request,
 ) {
 	// Header check
-	if r.Header.Get("Content-Type") != "" {
-		h, _ := header.ParseValueAndParams(r.Header, "Content-Type")
-		if h != "application/json" {
-			http.Error(w, "Content-Type header is not application/json", http.StatusUnsupportedMediaType)
-			return
-		}
+	if err := util.ValidateContentTypeApplicationJSON(r.Header); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	body := json.NewDecoder(r.Body)
