@@ -70,11 +70,11 @@ func (c *HttpUserUpdateController) HandlerFunc(
 	lastName := reqBody.LastName
 	command := usecase.NewCommand(id, firstName, lastName)
 	if err := c.usecase.Execute(command); err != nil {
-		http.Error(w, msgRegistFail, http.StatusInternalServerError)
+		http.Error(w, msgRegisterFail, http.StatusInternalServerError)
 		return
 	}
 
-	res, err := json.Marshal(registResponse{
+	res, err := json.Marshal(registerResponse{
 		Msg: msgUpdateSuccess,
 	})
 	if err != nil {
