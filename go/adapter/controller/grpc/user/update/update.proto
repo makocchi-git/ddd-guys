@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package update;
+
+service GrpcUserUpdateController {
+    rpc Execute (User) returns (google.protobuf.Empty) {};
+}
+
+message User {
+    string id = 1;
+    string firstname = 2;
+    string lastname = 3;
+}
