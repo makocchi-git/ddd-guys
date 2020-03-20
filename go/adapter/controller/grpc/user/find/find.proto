@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package find;
+
+service GrpcUserFindController {
+    rpc Execute (UserId) returns (Response) {}
+}
+
+message UserId {
+    string value = 1;
+}
+
+message Response {
+    string id = 1;
+    string firstname = 2;
+    string lastname = 3;
+}
