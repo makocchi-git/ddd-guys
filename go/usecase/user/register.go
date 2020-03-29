@@ -19,7 +19,20 @@ func NewUserRegisterUsecase(
 	idProvider domain.IIdProvider,
 	repository domain.IUserRepository,
 	publisher event.IPublisher,
+	subscribers []event.ISubscriber,
 ) *UserRegister {
+	// iDDD本ではapplication servic内部でsubscriberの登録を行うとあります
+	// っが、DIで外側から入れるとか、このようにnewの中でinjectionしてあげるかしてもいいかなと
+	// そもそもlocalのpublisher/subscriberパターンよりかは
+	// イベントドリブンな感じでremoteのメッセージングシステムに投げるのが時代な感じですね
+	// なのでsubscriberは別のシステムとして作ってイベントストリームをsubscriberするような形になると思います
+	// GCP pub/subや AWS kinesisを使うような感じですね
+	// その場合はIPublisher.Subscribeメソッドは不要になります。
+	// NodeJSになれてるのもありますが、こういうのはEventEmitterとかonClickみたいなイベントドリブンな
+	// 言語の方がやりやすい感じはありますね...
+	for _, v := range subscribers {
+		publisher.Subscribe(v)
+	}
 	return &UserRegister{
 		idProvider:     idProvider,
 		UserRepository: repository,
