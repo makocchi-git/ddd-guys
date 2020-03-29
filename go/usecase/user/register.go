@@ -3,6 +3,7 @@ package user
 import (
 	"errors"
 
+	event "github.com/jupemara/ddd-guys/go/domain/model/event/errors"
 	domain "github.com/jupemara/ddd-guys/go/domain/model/user"
 )
 
@@ -11,15 +12,31 @@ type UserRegister struct {
 	// とにかく技術的な詳細はクラスや外のモジュールに押し込んでいくというのがポイントですね
 	idProvider     domain.IIdProvider
 	UserRepository domain.IUserRepository
+	errorPublisher event.IPublisher
 }
 
 func NewUserRegisterUsecase(
 	idProvider domain.IIdProvider,
 	repository domain.IUserRepository,
+	publisher event.IPublisher,
+	subscribers []event.ISubscriber,
 ) *UserRegister {
+	// iDDD本ではapplication servic内部でsubscriberの登録を行うとあります
+	// っが、DIで外側から入れるとか、このようにnewの中でinjectionしてあげるかしてもいいかなと
+	// そもそもlocalのpublisher/subscriberパターンよりかは
+	// イベントドリブンな感じでremoteのメッセージングシステムに投げるのが時代な感じですね
+	// なのでsubscriberは別のシステムとして作ってイベントストリームをsubscriberするような形になると思います
+	// GCP pub/subや AWS kinesisを使うような感じですね
+	// その場合はIPublisher.Subscribeメソッドは不要になります。
+	// NodeJSになれてるのもありますが、こういうのはEventEmitterとかonClickみたいなイベントドリブンな
+	// 言語の方がやりやすい感じはありますね...
+	for _, v := range subscribers {
+		publisher.Subscribe(v)
+	}
 	return &UserRegister{
 		idProvider:     idProvider,
 		UserRepository: repository,
+		errorPublisher: publisher,
 	}
 }
 
@@ -27,14 +44,17 @@ func NewUserRegisterUsecase(
 func (u *UserRegister) Execute(firstName, lastName string) error {
 	id, err := u.idProvider.NextIdentity()
 	if err != nil {
+		u.errorPublisher.Publish(event.NewErrorEvent(id.Value(), err))
 		return errors.New("Failed to create new id")
 	}
 	// ここでまずビジネス条件を違反するインスタンスはそもそも作らせない
 	user, err := domain.NewUser(id, firstName, lastName)
 	if err != nil {
+		u.errorPublisher.Publish(event.NewErrorEvent(id.Value(), err))
 		return errors.New("Some given fields are invalid")
 	}
 	if err = u.UserRepository.Store(user); err != nil {
+		u.errorPublisher.Publish(event.NewErrorEvent(id.Value(), err))
 		return errors.New("Failed to register user")
 	}
 	return nil
