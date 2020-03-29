@@ -5,7 +5,10 @@ import (
 	"log"
 	"os"
 
+	"github.com/jupemara/ddd-guys/go/adapter/event/errors/pub"
+	"github.com/jupemara/ddd-guys/go/adapter/event/errors/sub"
 	repository "github.com/jupemara/ddd-guys/go/adapter/repository/user"
+	event "github.com/jupemara/ddd-guys/go/domain/model/event/errors"
 	usecase "github.com/jupemara/ddd-guys/go/usecase/user"
 )
 
@@ -15,6 +18,10 @@ func register(firstName, lastName string) {
 	err := usecase.NewUserRegisterUsecase(
 		repository.NewUuidIdProvider(),
 		repository.NewCsvRepository(),
+		pub.NewLocalPublisher(),
+		[]event.ISubscriber{
+			sub.NewStdoutLoggingSubscriber(),
+		},
 	).Execute(
 		firstName,
 		lastName,
