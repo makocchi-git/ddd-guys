@@ -7,11 +7,11 @@ import (
 )
 
 type UserFindUsecase struct {
-	repository domain.IUserRepository
+	queryService IUserQueryService
 }
 
-func NewUserFindUsecase(repository domain.IUserRepository) *UserFindUsecase {
-	return &UserFindUsecase{repository}
+func NewUserFindUsecase(queryService IUserQueryService) *UserFindUsecase {
+	return &UserFindUsecase{queryService: queryService}
 }
 
 // 返す値はDTOでもいいし、そのまま返してもいい
@@ -20,37 +20,9 @@ func NewUserFindUsecase(repository domain.IUserRepository) *UserFindUsecase {
 // コンパイルエラーを直していくような形で型定義をしていくスタイルだとビジネスルールに近い形のコードができあがるはずです
 func (u *UserFindUsecase) Execute(id string) (*Dto, error) {
 	userId := domain.NewId(id)
-	user, err := u.repository.FindById(userId)
+	dto, err := u.queryService.FindById(userId)
 	if err != nil {
 		return nil, errors.New("Couldn't find specified user")
 	}
-	return &Dto{
-		Id:        user.Id(),
-		FirstName: user.Name().FirstName(),
-		LastName:  user.Name().LastName(),
-	}, nil
-}
-
-type Dto struct {
-	Id        string
-	FirstName string
-	LastName  string
-}
-
-// こちらのパターンのように上位のレイヤー(UIやhttp handler)変更してほしくない値だけを
-// read onlyにしてガードしてあげるというパターンもアリえます
-type ReadOnlyIdDto struct {
-	id        string
-	FirstName string
-	LastName  string
-}
-
-func NewDto(id string) ReadOnlyIdDto {
-	return ReadOnlyIdDto{
-		id: id,
-	}
-}
-
-func (d ReadOnlyIdDto) Id() string {
-	return d.id
+	return &dto, nil
 }
