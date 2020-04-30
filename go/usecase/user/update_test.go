@@ -29,7 +29,10 @@ var _ = Describe("UseUpdateUsecase", func() {
 		ctrl = gomock.NewController(GinkgoT())
 		repository = mock.NewMockIUserRepository(ctrl)
 		usecase = user.NewUserUpdateUsecase(repository)
-		existingUser, _ = domain.NewUser(domain.NewId("12345"), "Rob", "Pike")
+
+		var err error
+		existingUser, err = domain.NewUser(domain.NewId("12345"), "Rob", "Pike")
+		Expect(err).To(BeNil())
 	})
 	AfterEach(func() {
 		ctrl.Finish()
@@ -57,6 +60,7 @@ var _ = Describe("UseUpdateUsecase", func() {
 			It("does not update User with no error", func() {
 				command := user.NewCommand("12345", "", "")
 				repository.EXPECT().FindById(gomock.Any()).Return(existingUser, nil).Times(1)
+				// First name, Last name が empty の場合、更新対象なしとみなされ Update は呼ばれない
 				repository.EXPECT().Update(gomock.Any()).Return(nil).Times(0)
 				err := usecase.Execute(command)
 				Expect(err).To(BeNil())
@@ -66,6 +70,7 @@ var _ = Describe("UseUpdateUsecase", func() {
 			It("fails with error when executing FindById()", func() {
 				command := user.NewCommand("12345", "Ken", "Thompson")
 				repository.EXPECT().FindById(gomock.Any()).Return(nil, errors.New("unexpected error")).Times(1)
+				// FindById でエラーが発生した場合、後続の Update は呼ばれない
 				repository.EXPECT().Update(gomock.Any()).Return(nil).Times(0)
 				err := usecase.Execute(command)
 				Expect(err).NotTo(BeNil())
