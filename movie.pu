@@ -1,0 +1,99 @@
+@startuml
+
+class Movie {
+    id: Id
+    title: Title
+    publishedPeriods: PublishPeriod[]
+    scores: Scores
+    publishDate: date
+    length: Length
+    labels: Label[]
+
+    +new(): boolean
+    +changeScore(score: Score): error
+}
+
+class Scores {
+    scores: Score[]
+}
+
+class Id {
+    value: string
+}
+
+class Title {
+    value: string
+}
+
+note bottom of Title
+    It must be between 1 and 255 characters.
+end note
+
+class Length {
+    value: integer
+    hour: integer
+    min: integer
+    sec: integer
+}
+
+note bottom of Length
+    Value is presented as minutes.
+    Value must be between 1 and 300.
+end note
+
+class Label {
+    value: string
+}
+
+note bottom of Label
+    Value must be between 1 and 300.
+end note
+
+class PublishPeriod {
+    contentsProvider: ContentsProvider
+    start: date
+    end: date
+}
+
+class ContentsProvider {
+    value: string
+}
+
+interface Score {
+    scoreProvider: ScoreProvider
+    value: integer
+}
+
+class AmazonScore {
+}
+
+note bottom of AmazonScore
+    Value must be between 0.1 to 5.0.
+    Original value is multiplied by 1000.
+end note
+
+class YahooScore {
+}
+
+note bottom of YahooScore
+    Value must be between 0.1 to 5.0.
+    Original value is multiplied by 1000.
+end note
+
+class ScoreProvider {
+    value: string
+}
+
+Movie o-- Id
+Movie o-- Title
+Movie o-- Length
+Movie o-right- "0..*" PublishPeriod
+Movie o-- "0..*" Label
+Movie o-left- Scores
+Scores o-- "0..*" Score
+Score o-- ScoreProvider
+Score <|-- AmazonScore
+Score <|-- YahooScore
+PublishPeriod o-- ContentsProvider
+
+@enduml
