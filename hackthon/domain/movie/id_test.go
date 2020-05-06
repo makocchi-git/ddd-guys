@@ -13,7 +13,7 @@ func TestIdBdd(t *testing.T) {
 	RunSpecs(t, "create id instance test")
 }
 
-var _ = Describe("New Id", func() {
+var _ = Describe("NewId", func() {
 	Context("with empty id", func() {
 		It("fails to create Id and returns error", func() {
 			idValue := ""
