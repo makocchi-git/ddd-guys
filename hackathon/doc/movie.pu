@@ -8,8 +8,10 @@ class Movie {
     publishDate time.Time
     length Length
     labels Label[]
+    status State
 
     +new() boolean
+    +isVisible() boolean
     +changeScore(score Score) error
 }
 
