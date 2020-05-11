@@ -21,6 +21,10 @@ class Id {
     value: string
 }
 
+note bottom of Id
+    It must be between 6 and 32 characters.
+end note
+
 class Title {
     value: string
 }
@@ -84,6 +88,13 @@ class ScoreProvider {
     value: string
 }
 
+interface IIdProvider {
+    NextIdentity(): (*Id, error)
+}
+
+class UuidIdProvider {
+}
+
 Movie o-- Id
 Movie o-- Title
 Movie o-- Length
@@ -95,5 +106,6 @@ Score o-- ScoreProvider
 Score <|-- AmazonScore
 Score <|-- YahooScore
 PublishPeriod o-- ContentsProvider
+IIdProvider <|.. UuidIdProvider
 
 @enduml
