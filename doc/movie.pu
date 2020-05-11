@@ -17,6 +17,10 @@ class Scores {
     scores: Score[]
 }
 
+note left of Scores
+    ScoreProvider id must be unique.
+end note
+
 class Id {
     value: string
 }
@@ -85,7 +89,7 @@ note bottom of YahooScore
 end note
 
 class ScoreProvider {
-    value: string
+    id: integer
 }
 
 interface IIdProvider {
