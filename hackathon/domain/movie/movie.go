@@ -1,7 +1,7 @@
 package movie
 
 import (
-	"github.com/jupemara/ddd-guys/hackathon/score"
+	"github.com/jupemara/ddd-guys/hackathon/domain/movie/score"
 )
 
 type Movie struct {
@@ -17,4 +17,8 @@ type Movie struct {
 
 func (m Movie) Length() length {
 	return m.length
+}
+
+func (m Movie) Scores() Scores {
+	return m.scores
 }

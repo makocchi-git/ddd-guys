@@ -1,30 +1,30 @@
 package score
 
+import (
+	"fmt"
+)
+
 // Scores
 
-func (m Movie) Scores() Scores {
-	return m.scores
-}
-
 type Scores struct {
-	values []Score
+	values []IScore
 }
 
-func (s Scores) Values() {
+func (s Scores) Values() []IScore {
 	return s.values
 }
 
 func NewScores(s []IScore) (*Scores, error) {
 	if len(s) == 0 {
 		return &Scores{
-			values: s
+			values: s,
 		}, nil
 	}
 
 	var counter map[int]int
 	for _, v := range s {
 		i := v.ScoreProvider().Id()
-		p, ok := counter[i]
+		_, ok := counter[i]
 		if !ok {
 			// new provider
 			counter[i] = 0
@@ -38,32 +38,8 @@ func NewScores(s []IScore) (*Scores, error) {
 			return nil, fmt.Errorf("%d is duplicated", k)
 		}
 	}
-	
+
 	return &Scores{
-		values: s
+		values: s,
 	}, nil
 }
-
-type IScore interface {
-	ScoreProvider() ScoreProvider
-	Value() int
-}
-
-type ScoreProvider struct {
-	id int
-}
-
-func (s ScoreProvider) Id() int {
-	return s.id
-}
-
-var ScoreProviderMap [int]string {
-	AMAZON: "Amazon Prime Video",
-	YAHOO: "Yahoo! Movie",
-}
-
-const (
-	_ = iota
-	AMAZON
-	YAHOO
-)

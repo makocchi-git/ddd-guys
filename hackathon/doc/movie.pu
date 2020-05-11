@@ -1,20 +1,20 @@
 @startuml
 
 class Movie {
-    id: Id
-    title: Title
-    publishedPeriods: PublishPeriod[]
-    scores: Scores
-    publishDate: date
-    length: Length
-    labels: Label[]
+    id Id
+    title Title
+    publishedPeriods PublishPeriod[]
+    scores Scores
+    publishDate time.Date
+    length Length
+    labels Label[]
 
-    +new(): boolean
-    +changeScore(score: Score): error
+    +new() boolean
+    +changeScore(score Score) error
 }
 
 class Scores {
-    scores: Score[]
+    scores Score[]
 }
 
 note left of Scores
@@ -22,7 +22,7 @@ note left of Scores
 end note
 
 class Id {
-    value: string
+    value string
 }
 
 note bottom of Id
@@ -30,7 +30,7 @@ note bottom of Id
 end note
 
 class Title {
-    value: string
+    value string
 }
 
 note bottom of Title
@@ -38,10 +38,10 @@ note bottom of Title
 end note
 
 class Length {
-    value: integer
-    hour: integer
-    min: integer
-    sec: integer
+    value int
+    hour int
+    min int
+    sec int
 }
 
 note bottom of Length
@@ -50,7 +50,7 @@ note bottom of Length
 end note
 
 class Label {
-    value: string
+    value string
 }
 
 note bottom of Label
@@ -58,18 +58,18 @@ note bottom of Label
 end note
 
 class PublishPeriod {
-    contentsProvider: ContentsProvider
-    start: date
-    end: date
+    contentsProvider ContentsProvider
+    startDate time.Date
+    endDate time.date
 }
 
 class ContentsProvider {
-    value: string
+    value string
 }
 
 interface Score {
-    scoreProvider: ScoreProvider
-    value: integer
+    scoreProvider ScoreProvider
+    value int
 }
 
 class AmazonScore {
@@ -89,11 +89,11 @@ note bottom of YahooScore
 end note
 
 class ScoreProvider {
-    id: integer
+    id int
 }
 
 interface IIdProvider {
-    NextIdentity(): (*Id, error)
+    NextIdentity() (*Id, error)
 }
 
 class UuidIdProvider {
