@@ -1,4 +1,4 @@
-module github.com/jupemara/ddd-guys/hackthon
+module github.com/jupemara/ddd-guys/hackathon
 
 go 1.13
 
