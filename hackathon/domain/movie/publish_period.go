@@ -4,6 +4,6 @@ import "time"
 
 type PublishPeriod struct {
 	contentsProvider ContentsProvider
-	startDate        time.Date
-	endDate          time.Date
+	startDate        time.Time
+	endDate          time.Time
 }

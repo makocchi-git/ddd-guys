@@ -5,7 +5,7 @@ class Movie {
     title Title
     publishedPeriods PublishPeriod[]
     scores Scores
-    publishDate time.Date
+    publishDate time.Time
     length Length
     labels Label[]
 
@@ -59,8 +59,8 @@ end note
 
 class PublishPeriod {
     contentsProvider ContentsProvider
-    startDate time.Date
-    endDate time.date
+    startDate time.Time
+    endDate time.Time
 }
 
 class ContentsProvider {

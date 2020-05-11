@@ -3,7 +3,7 @@ package movie_test
 import (
 	"testing"
 
-	"github.com/jupemara/ddd-guys/hackthon/domain/movie"
+	"github.com/jupemara/ddd-guys/hackathon/domain/movie"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

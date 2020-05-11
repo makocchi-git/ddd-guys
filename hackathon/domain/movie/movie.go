@@ -9,16 +9,16 @@ type Movie struct {
 	title           Title
 	publishdPeriods []PublishPeriod
 	scores          score.Scores
-	length          length
+	length          Length
 	labels          []Label
 }
 
 // TODO: Length
 
-func (m Movie) Length() length {
+func (m Movie) Length() Length {
 	return m.length
 }
 
-func (m Movie) Scores() Scores {
+func (m Movie) Scores() score.Scores {
 	return m.scores
 }
